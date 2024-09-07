@@ -1,0 +1,47 @@
+/* Main Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navbar */
+.navbar {
+    border-bottom: 1px solid #ddd;
+}
+
+/* Hero Banner */
+.hero {
+    background: #222 url('https://via.placeholder.com/1000x400') center/cover no-repeat;
+    color: white;
+    padding: 60px 0;
+    text-align: center;
+}
+
+/* Category Cards */
+.category-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.category-card img {
+    width: 60px;
+    margin: 10px auto;
+}
+
+.category-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Footer */
+footer {
+    background-color: #222;
+    color: #ccc;
+    padding: 20px 0;
+    text-align: center;
+}
+
