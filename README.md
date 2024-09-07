@@ -11,4 +11,4 @@ Welcome to the **Tattoo E-Commerce Store**, your one-stop shop for all things ta
 ## 🚀 Getting Started
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/yourusername/tattoo-ecommerce.git
+	https://github.com/edwardsila/inkmaster-s_store.git
