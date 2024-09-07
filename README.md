@@ -12,3 +12,7 @@ Welcome to the **Tattoo E-Commerce Store**, your one-stop shop for all things ta
 1. **Clone the Repository**:
    ```bash
 	https://github.com/edwardsila/inkmaster-s_store.git
+
+2. **Activate virtual enviroment**:
+   ```bash
+        source env/bin/activate
