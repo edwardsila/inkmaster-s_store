@@ -7,12 +7,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inkmaster</title>
     <link rel="icon" type="image/x-icon" href="{% static 'assets/favicon.ico' %}" />
-    <!...<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">..!>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
     <style>
-        .category-card {
-            max-width: 150px; /* Smaller size for category cards */
+        .product-card {
+            max-width: 300px; /* Adjusted size for product cards */
             margin: 0 auto;
+        }
+        .product-img {
+            height: 300px; /* Fixed height for product images */
+            object-fit: cover; /* Ensure image covers the area */
         }
     </style>
 </head>
@@ -21,15 +25,15 @@
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">FreshCart</a>
+        <a class="navbar-brand" href="#">Inkmasters</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Shop</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Cart</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">About</a></li>
             </ul>
         </div>
     </div>
@@ -42,39 +46,25 @@
     </div>
 </section>
 
-<!-- Categories Section -->
-<section class="categories py-4">
+<!-- Products Section -->
+<section class="products py-4">
     <div class="container text-center">
-        <h2 class="mb-4">Shop by Category</h2>
+        <h2 class="mb-4">Featured Products</h2>
         <div class="row justify-content-center">
-            <div class="col-4 col-md-2 mb-3">
-                <div class="card category-card text-center">
-                    <img src="https://via.placeholder.com/60" class="card-img-top mt-2" alt="Category Icon 1">
+            {% for product in products %}
+            <div class="col-12 col-md-4 mb-4">
+                <div class="card product-card text-center">
+                    <img src="{{ product.image.url }}" class="card-img-top product-img" alt="...">
                     <div class="card-body">
-                        <h6 class="card-title">Category 1</h6>
-                        <a href="category1.html" class="btn btn-sm btn-primary">Explore</a>
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text">${{ product.price }}</p>
+                        <p class="card-text">{{ product.category }}</p>
+                        <a href="product1.html" class="btn btn-primary">View Details</a>
                     </div>
                 </div>
             </div>
-            <div class="col-4 col-md-2 mb-3">
-                <div class="card category-card text-center">
-                    <img src="https://via.placeholder.com/60" class="card-img-top mt-2" alt="Category Icon 2">
-                    <div class="card-body">
-                        <h6 class="card-title">Category 2</h6>
-                        <a href="category2.html" class="btn btn-sm btn-primary">Explore</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-4 col-md-2 mb-3">
-                <div class="card category-card text-center">
-                    <img src="https://via.placeholder.com/60" class="card-img-top mt-2" alt="Category Icon 3">
-                    <div class="card-body">
-                        <h6 class="card-title">Category 3</h6>
-                        <a href="category3.html" class="btn btn-sm btn-primary">Explore</a>
-                    </div>
-                </div>
-            </div>
-            <!-- Additional categories can be added here -->
+            {% endfor %}
+            <!-- Additional products can be added here -->
         </div>
     </div>
 </section>
