@@ -28,7 +28,7 @@ def login_user(request):
             messages.success(request, ("You have been logged in"))
             return redirect('home')
         else:
-            messages.success(request, ("There was an error, try again later...."))
+            messages.success(request, ("Please check your username and password!"))
             return redirect('login')
     
     else:    
