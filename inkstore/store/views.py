@@ -10,6 +10,11 @@ from .forms import SignUpForm
 '''Create your views here.'''
 
 
+def product(request, pk):
+    ''' view for the products themselves '''
+    product = Product.objects.get(id=pk)
+    return render(request, 'product.html', {'products': products})
+
 def home(request):
     ''' view for our home page '''
     products = Product.objects.all()
