@@ -2,26 +2,55 @@
 
 {% block content %}
 
-<div class="container">
-    <div class="row">
-        <center>
-            <div class="col-8">
-<p align="justify"> 
-<br/><br/>             
-Welcome to Inkmaster, your ultimate destination for high-quality tattoo supplies and equipment. Born from a passion for the art of tattooing, we aim to empower artists with the tools they need to create extraordinary works of art. Our carefully curated collection includes everything from premium inks and needles to state-of-the-art tattoo machines, ensuring that every product meets the highest standards of safety, quality, and performance.
-<br/><br/>
-At Inkmaster, we believe that every tattoo tells a story, and we are committed to supporting artists in bringing those stories to life. Whether you are a seasoned professional or an aspiring artist, our mission is to provide you with the products, inspiration, and expertise you need to excel in your craft. Join us on our journey as we continue to grow and innovate, all while keeping the artist at the heart of everything we do. Welcome to the Inkmaster family—where passion meets precision.
-</p>
-<br/><br/>
-<br/><br/>
-<br/><br/>
+<div class="container"
 <br/><br/>
 <br/><br/>
 
-            </div>
-       </center>
-   </div>
+<div class="card mb-3">
+  <div class="row g-0">
+    <div class="col-md-4">
+      <img src="{{ product.image.url }}" class="img-fluid rounded-start" alt="...">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+      <center>
+        <h5 class="card-title">{{ product.name }}</h5>
+        <br/>
+        <p class="card-text">{{ product.description }}</p>
+        
+        {% if product.is_sale %}
+        
+                        
+                          <div class="d-flex justify-content-center mb-2">
+                		<span class="text-warning">&#9733;</span>
+                		<span class="text-warning">&#9733;</span>
+                		<span class="text-warning">&#9733;</span>
+                		<span class="text-warning">&#9733;</span>
+                		<span class="text-secondary">&#9733;</span>
+            		</div>
+                        <p class="card-text"><strike>${{ product.price }}</strike> &nbsp; ${{ product.sale_price }} </p>
+        
+        {% else %}
+            ${{ product.price }}
+        
+        {% endif %}
+        <br/>
+        <a href="{% url 'home' %}" class="btn btn-secondary">Home</a>
+      </center>
+      </div>
+    </div>
+  </div>
 </div>
+
+</div>
+
+<br/><br/>
+<br/><br/>
+<br/><br/>
+<br/><br/>
+<br/><br/>
+<br/>
+
 
 
 {% endblock %}

@@ -13,7 +13,7 @@ from .forms import SignUpForm
 def product(request, pk):
     ''' view for the products themselves '''
     product = Product.objects.get(id=pk)
-    return render(request, 'product.html', {'products': products})
+    return render(request, 'product.html', {'product': product})
 
 def home(request):
     ''' view for our home page '''
