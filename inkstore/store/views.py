@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
-
+from .forms import SignUpForm
 
 '''Create your views here.'''
 
@@ -45,4 +45,9 @@ def logout_user(request):
     
 def register_user(request):
     ''' view to register user '''
+    form = SignUpForm()
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
     return render(request, 'register.html', {})
