@@ -13,28 +13,33 @@
 </section>
 
 </br></br>
-</br></br>
+
 
 
 <div class="container">
     <div class="row">
-        <center>
-            <div class="col-md-6">
+     
+            <div class="col-md-6 offset-md-3">
             
-<form method="POST" action="{% url 'login' %}">
+<form method="POST" action="{% url 'register' %}">
 	{% csrf_token %}
 	
+	
+	{{ form.as_p }}
+	<br/><br/>
+	<center>
+	<button type="submit" class="btn btn-secondary">
+	Register
+	</button>
+	</center>
 
 </form>
 <br/><br/>
 <br/><br/>
-<br/><br/>
-<br/><br/>
-<br/><br/>
-<br/><br/>
+
 
             </div>
-       </center>
+       
    </div>
 </div>
 

@@ -54,7 +54,7 @@ def register_user(request):
             username = form.cleaned_data['username']
             password = form.cleaned_data['password1']
             ''' login user '''
-            user = authenticate(username=username, password=password
+            user = authenticate(username=username, password=password)
             login(request, user)
             messages.success(request, ("You have registered succesfully!"))
             return redirect('home')
@@ -62,4 +62,4 @@ def register_user(request):
             messages.success(request, ("oops! please check your details"))
             return redirect('register')
     else:        
-        return render(request, 'register.html', {})
+        return render(request, 'register.html', {'form':form})
