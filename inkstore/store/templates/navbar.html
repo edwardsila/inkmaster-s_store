@@ -9,7 +9,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
+            <ul class="navbar-nav me-auto">
                 <li class="nav-item">
                     <a class="nav-link active" href="{% url 'home' %}">Home</a>
                 </li>
@@ -37,11 +37,17 @@
                         Categories
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="categoriesDropdown">
-                        <li><a class="dropdown-item" href="#">Category 1</a></li>
-                        <li><a class="dropdown-item" href="#">Category 2</a></li>
-                        <li><a class="dropdown-item" href="#">Category 3</a></li>
+                        <li><a class="dropdown-item" href="{% url 'home' %}">All products</a></li>
+                        <li><a class="dropdown-item" href="{% url 'category' 'Aftercare-products' %}">Aftercare products</a></li>
+                        <li><a class="dropdown-item" href="{% url 'category' 'Tatto-kits' %}">Tattoo kits</a></li>
+                        <li><a class="dropdown-item" href="{% url 'category' 'Power-supplies' %}">Power supplies</a></li>
+                        <li><a class="dropdown-item" href="{% url 'category' 'inks' %}">Inks</a></li>
+                        <li><a class="dropdown-item" href="{% url 'category' 'Tattoo-Needles-and-Cartridges' %}">Tattoo Needles and Cartridges</a></li>
+                        <li><a class="dropdown-item" href="{% url 'category' 'Tattoo-Machines' %}">Tattoo Machines</a></li>
                     </ul>
                 </li>
+             </ul>
+              <ul class="navbar-nav ms-5">
                 <li class="nav-item">
                     <a class="nav-link position-relative" href="#">
                         <i class="bi bi-cart-fill"></i> <!-- Cart icon -->
@@ -51,7 +57,8 @@
                         </span>
                     </a>
                 </li>
-            </ul>
+               </ul>
+            
         </div>
     </div>
 </nav>
