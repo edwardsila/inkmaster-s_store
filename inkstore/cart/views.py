@@ -7,8 +7,11 @@ from django.http import JsonResponse
 # Create your views here.
 
 def cart_summary(request):
+    ''' get tghe cart '''
+    cart = Cart(request)
+    cart_products = cart.get_product
     ''' returns summary about the cart '''
-    return render(request, "cart_summary.html", {})
+    return render(request, "cart_summary.html", {"cart_products": cart_products})
     
 def cart_add(request):
     ''' get the cart '''
