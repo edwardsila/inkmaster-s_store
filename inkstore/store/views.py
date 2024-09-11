@@ -5,9 +5,56 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
-from .forms import SignUpForm
+from .forms import SignUpForm, UpdateUserForm, ChangePasswordForm
 
 '''Create your views here.'''
+
+
+def update_password(request):
+    if request.user.is_authenticated:
+        current_user = request.user
+        ''' did the fill out the page? '''
+        if request.method == 'POST':
+            form = ChangePasswordForm(current_user, request.POST)
+            ''' is form valid '''
+            if form.is_valid():
+                form.save()
+                messages.success(request, "Your password has been Updated....")
+                login(request, current_user)
+                return redirect('update_user')
+            else:
+                for error in list(form.errors.values()):
+                    messages.error(request, error)
+
+        else:
+            form = ChangePasswordForm(current_user)
+            return render(request, "update_password.html", {'form':form})
+    else:
+        messages.success(request, "You must be logged in to access that page")
+        return redirect('home')
+
+
+
+
+def update_user(request):
+    if request.user.is_authenticated:
+        ''' need to know which user '''
+        current_user = User.objects.get(id=request.user.id)
+        user_form = UpdateUserForm(request.POST or None, instance=current_user)
+
+        if user_form.is_valid():
+            user_form.save()
+
+            login(request, current_user)
+            messages.success(request, "User has been updated!!")
+            return redirect('home')
+
+        return render(request, "update_user.html", {'user_form':user_form})
+
+    else:
+        messages.success(request, "You must be logged in to access that page")
+        return redirect('home')
+
 
 def category_summary(request):
     ''' get all the cattegories '''
