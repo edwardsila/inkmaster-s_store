@@ -56,7 +56,17 @@
         <div class="row justify-content-center">
           <div class="col-md-2">Quantity</div>
           <div class="col-md-2">
-              <select class="form-select form-select-sm" id="qty-cart">
+              <select class="form-select form-select-sm" id="select{{product.id}}">
+              <option selected>
+                {% for key, value in quantities.items %}
+
+                    {% if key == product.id|slugify %}
+                        {{ value }}
+                    {% endif %}
+
+                {% endfor %}   
+              </option>
+
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -69,6 +79,17 @@
 
         <br/>
         <a href="{% url 'home' %}" class="btn btn-secondary">Home</a>
+        &nbsp;
+
+        <button type="button" data-index="{{ product.id }}" class="btn btn-secondary update-cart">
+            Update
+        </button>
+         &nbsp;
+
+          <button type="button" data-index="{{ product.id }}" class="btn btn-danger delete-product">
+            Remove
+        </button>
+
       </center>
       </div>
     </div>
@@ -76,6 +97,7 @@
 </div><br/>
 
         {% endfor %}
+        <h3>Total: ${{ totals }}<h3>
     {% else %}
      THeres nothing in your cart
      </br></br></br></br></br></br></br>
@@ -84,4 +106,76 @@
     </div>
 </br></br></br></br></br></br></br>
 
+
+<script>
+    //update cat
+      // check if button pressed
+  $(document).on('click', '.update-cart', function(e){
+    e.preventDefault();
+
+    // grab product id
+    var productid = $(this).data('index');
+
+    $.ajax({
+      type: 'POST',
+      url: '{% url 'cart_update' %}',
+      data: {
+        product_id: $(this).data('index'),
+        product_qty: $('#select' + productid + ' option:selected').text(),
+        csrfmiddlewaretoken: '{{ csrf_token }}',  //prevent hackers from accesing  the field form
+        action: 'post'
+      },
+
+      success: function(json){
+        //console.log(json)
+        //document.getElementById("cart_quantity").textContent = json.Qty
+        location.reload();
+      },
+
+      error: function(xhr, errmsg, err){
+
+      },
+
+    });
+
+
+
+  })
+
+
+
+//delete cat
+      // check if button pressed
+  $(document).on('click', '.delete-product', function(e){
+    e.preventDefault();
+
+    // grab product id
+    //var productid = $(this).data('index');
+
+    $.ajax({
+      type: 'POST',
+      url: '{% url 'cart_delete' %}',
+      data: {
+        product_id: $(this).data('index'),
+        csrfmiddlewaretoken: '{{ csrf_token }}',  //prevent hackers from accesing  the field form
+        action: 'post'
+      },
+
+      success: function(json){
+        //console.log(json)
+        //document.getElementById("cart_quantity").textContent = json.Qty
+        location.reload();
+      },
+
+      error: function(xhr, errmsg, err){
+
+      },
+
+    });
+
+
+
+  })
+
+</script>
 {% endblock %}

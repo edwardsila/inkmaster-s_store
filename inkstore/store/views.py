@@ -9,6 +9,12 @@ from .forms import SignUpForm
 
 '''Create your views here.'''
 
+def category_summary(request):
+    ''' get all the cattegories '''
+    categories = Category.objects.all()
+    return render(request, 'category_summary.html', {'categories': categories})
+
+
 def category(request, foo):
     ''' view for the category page '''
     ''' replace hiphens with space '''
