@@ -7,7 +7,7 @@
     <div class="container-fluid h-100 d-flex justify-content-center align-items-center" style="background: rgba(0, 0, 0, 0.7);">
         <div class="text-container text-center text-light">
             <h1 class="h3 mb-1" style="font-family: 'Graffiti', sans-serif;">Category page</h1>
-            <p class="mb-0" style="font-size: 1rem;">View your category...</p>
+            <p class="mb-0" style="font-size: 1rem;">Choose your categorty</p>
         </div>
     </div>
 </section>
@@ -16,6 +16,10 @@
     <div class="row">
         <center>
             <div class="col-8">
+                <br/></br>
+            {% for category in categories %}
+                <h3><a href="{% url 'category' category %}">{{ category }}</a></h3>
+            {% endfor %}
 
 
 
@@ -25,7 +29,7 @@
 <br/><br/>
 <br/><br/>
 <br/><br/>
-<br/><br/>
+<br/><br/><br/>
 
             </div>
        </center>
