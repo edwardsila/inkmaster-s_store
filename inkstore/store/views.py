@@ -1,13 +1,58 @@
 from django.shortcuts import render, redirect
-from .models import Product, Category
+from .models import Product, Category, Profile
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
-from .forms import SignUpForm, UpdateUserForm, ChangePasswordForm
+from .forms import SignUpForm, UpdateUserForm, ChangePasswordForm, UserInfoForm
+from django.db.models import Q
 
 '''Create your views here.'''
+
+
+def search(request):
+    ''' check if the filled out the form '''
+    if request.method == "POST":
+        searched = request.POST['searched']
+        ''' Query the products '''
+        searched = Product.objects.filter(Q(name__icontains=searched) | Q(description__icontains=searched))
+        ''' test for null '''
+        if not searched:
+            messages.success(request, "That product does not exist!!")
+            return render(request, "search.html", {})
+        else:
+            return render(request, "search.html", {'searched':searched})
+    else:
+        return render(request, "search.html", {})
+
+
+
+def update_info(request):
+    if request.user.is_authenticated:
+        ''' need to know which user '''
+        current_user = Profile.objects.get(user__id=request.user.id)
+        form = UserInfoForm(request.POST or None, instance=current_user)
+
+        if form.is_valid():
+            form.save()
+
+            messages.success(request, "Your info has been updated!!")
+            return redirect('home')
+
+        return render(request, "update_info.html", {'form':form})
+
+    else:
+        messages.success(request, "You must be logged in to access that page!!")
+        return redirect('home')
+
+
+def category_summary(request):
+    ''' get all the cattegories '''
+    categories = Category.objects.all()
+    return render(request, 'category_summary.html', {'categories': categories})
+
+    
 
 
 def update_password(request):
@@ -129,8 +174,8 @@ def register_user(request):
             ''' login user '''
             user = authenticate(username=username, password=password)
             login(request, user)
-            messages.success(request, ("You have registered succesfully!"))
-            return redirect('home')
+            messages.success(request, ("Username created please fill out your User ufo below..."))
+            return redirect('update_info')
         else:
             messages.success(request, ("oops! please check your details"))
             return redirect('register')

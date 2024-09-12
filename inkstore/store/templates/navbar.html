@@ -61,6 +61,9 @@
                     <a class="nav-link active" href="{% url 'home' %}">Home</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'search' %}">Search</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{% url 'about' %}">About</a>
                 </li>
                 
@@ -69,8 +72,15 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'logout' %}">Logout</a>
                 </li>
-                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'update_user' %}">Profile</a>
+
+                 <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Profile
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="categoriesDropdown">
+                        <li><a class="dropdown-item" href="{% url 'update_user' %}">User profile</a></li>
+                        <li><a class="dropdown-item" href="{% url 'update_info' %}">User info</a></li>
+                    </ul>
                 </li>
                 {% else %}
                 <li class="nav-item">
