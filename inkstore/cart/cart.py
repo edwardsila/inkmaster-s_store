@@ -1,8 +1,11 @@
-from store.models import Product
+from store.models import Product, Profile
 
 class Cart():
     def __init__(self, request):
         self.session = request.session
+        ''' get request '''
+        self.request = request
+
         
         ''' get current session if it exists '''
         cart = self.session.get('session_key')
@@ -27,6 +30,16 @@ class Cart():
             self.cart[product_id] = int(product_qty)
 
         self.session.modified = True
+
+        ''' deal with logged in users '''
+        if self.request.user.is_authenticated:
+            ''' get current user profile '''
+            current_user = Profile.objects.filter(user__id=self.request.user.id)
+            ''' deal with single quotetionmarks in cart to make em double'''
+            carty = str(self.cart)
+            carty = carty.replace("\'", "\"")
+            ''' save our carty to the profile model '''
+            current_user.update(old_cart=str(carty))
 
     def cart_total(self):
         ''' get product ids '''
