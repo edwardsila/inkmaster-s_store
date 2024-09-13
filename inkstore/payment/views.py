@@ -9,6 +9,24 @@ from store.models import Product
 
 # Create your views here.
 
+
+def not_shipped_dash(request):
+	if request.user.is_authenticated and request.user.is_superuser:
+		orders = Order.objects.filter(shipped=False)
+
+		return render(request, "payment/not_shipped_dash.html", {"orders":orders})
+	else:
+		messages.success(request, "Access denied")
+		return redirect('home')
+
+def shipped_dash(request):
+	if request.user.is_authenticated and request.user.is_superuser:
+		orders = Order.objects.filter(shipped=True)
+		return render(request, "payment/shipped_dash.html", {"orders":orders})
+	else:
+		messages.success(request, "Access denied")
+		return redirect('home')
+	
 def process_order(request):
 	if request.POST:
 		''' get the cart '''

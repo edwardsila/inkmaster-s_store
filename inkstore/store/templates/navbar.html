@@ -82,6 +82,21 @@
                         <li><a class="dropdown-item" href="{% url 'update_info' %}">User info</a></li>
                     </ul>
                 </li>
+
+                {% if user.is_superuser %}
+
+                 <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Orders
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="categoriesDropdown">
+                        <li><a class="dropdown-item" href="{% url 'shipped_dash' %}">Shipped orders</a></li>
+                        <li><a class="dropdown-item" href="{% url 'not_shipped_dash' %}">Unshipped orders</a></li>
+                    </ul>
+                </li>
+
+                {% endif %}
+                
                 {% else %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'login' %}">Login</a>
