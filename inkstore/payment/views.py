@@ -6,6 +6,20 @@ from django.contrib import messages
 
 # Create your views here.
 
+def process_order(request):
+	''' did someone submit the form '''
+	if request.POST:
+		''' get billing info from last page '''
+		payment_form = PaymentForm(request.POST or None)
+		''' get shipping session data '''
+		my_shipping = request.session.get('my_shipping')
+		print(my_shipping)
+		messages.success(request, "Order placed")
+		return redirect('home')
+	else:
+		messages.success(request, "Access denied")
+		return redirect('home')
+
 def billing_info(request):
 	if request.POST:
 		''' get tghe cart '''
@@ -14,6 +28,10 @@ def billing_info(request):
 
 		quantities = cart.get_quantity
 		totals = cart.cart_total()
+
+		''' create session with shipping info '''
+		my_shipping = request.POST
+		request.session['my_shipping'] = my_shipping
 
 		''' check to see if user is logged in '''
 		if request.user.is_authenticated:
