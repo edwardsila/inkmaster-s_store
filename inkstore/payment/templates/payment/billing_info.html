@@ -8,8 +8,8 @@
 <section class="hero-banner position-relative" style="height: 150px; width: 100vw; background: url('path-to-your-image.jpg') no-repeat center center / cover, rgba(0, 0, 0, 0.7); color: white; margin-left: calc(-50vw + 50%);">
     <div class="container-fluid h-100 d-flex justify-content-center align-items-center" style="background: rgba(0, 0, 0, 0.7);">
         <div class="text-container text-center text-light">
-            <h1>Checkout</h1>
-            <p class="mb-0" style="font-size: 1rem;">Review Your Order...</p>
+            <h1>Billing Info</h1>
+            <p class="mb-0" style="font-size: 1rem;">Enter Your Payment Info...</p>
         </div>
     </div>
 </section>
@@ -56,17 +56,39 @@
                   <strong>Shipping info</strong>
                 </div>
                 <div class="card-body">
-                  <form method="POST" action="{% url 'billing_info' %}">
-                    {% csrf_token %}
-                    {{ shipping_form.as_p }}
+                  
+                    Name: {{ shipping_info.shipping_full_name }}<br/>
+                    Email: {{ shipping_info.shipping_email }}<br/>
+                    Address1: {{ shipping_info.shipping_address1 }}<br/>
+                    Address2: {{ shipping_info.shipping_address2 }}<br/>
+                    City: {{ shipping_info.shipping_city }}<br/>
+                    State: {{ shipping_info.shipping_state }}<br/>
+                    Zipcode: {{ shipping_info.shipping_zipcode }}<br/>
+                    Country: {{ shipping_info.shipping_country }}<br/>
+                    <br/>
+                    <a href="{% url 'checkout' %}" class="btn btn-outline-secondary">Update Shipping</a>
                     
 
 
                 </div>
               </div>
-              <br/>
-              <button type="submit" class="btn btn-secondary">Continue to Billing</button>
-              </form>
+              <br/><br/>
+
+              <div class="card">
+                <div class="card-header">
+                  <strong>Billing info</strong>
+                </div>
+                <div class="card-body">
+                  
+                    {{ billing_form.as_p }}
+                    
+
+
+                </div>
+              </div>
+            </br>
+
+              <a href="#" class="btn btn-secondary">Pay Now</a>
 
           </div>
          
