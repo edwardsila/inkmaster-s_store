@@ -4,12 +4,14 @@ from payment.forms import ShippingForm, PaymentForm
 from payment.models import ShippingAddress, Order, OrderItem
 from django.contrib import messages
 from django.contrib.auth.models import User
+from store.models import Product
+
 
 # Create your views here.
 
 def process_order(request):
 	if request.POST:
-		''' get tghe cart '''
+		''' get the cart '''
 		cart = Cart(request)
 		cart_products = cart.get_product
 
@@ -38,6 +40,29 @@ def process_order(request):
 			create_order = Order(user=user, full_name=full_name, email=email, shipping_address=shipping_address, amount_paid=amount_paid)
 			create_order.save()
 
+
+			''' add order items '''
+			''' get the order ID '''
+			order_id = create_order.pk
+
+			''' get product id '''
+			for product in cart_products():
+				product_id = product.id
+				''' get product price '''
+				if product.is_sale:
+					price = product.sale_price
+				else:
+					price = product.price
+
+				''' get quantity '''
+				for key, value in quantities().items():
+					if int(key) == product.id:
+						''' create order item '''
+						create_order_item = OrderItem(order_id=order_id, product_id=product_id, user=user, quantity=value, price=price)
+						create_order_item.save()
+
+
+
 			messages.success(request, "Order placed")
 			return redirect('home')
 
@@ -46,6 +71,30 @@ def process_order(request):
 			''' create order '''
 			create_order = Order(full_name=full_name, email=email, shipping_address=shipping_address, amount_paid=amount_paid)
 			create_order.save()
+
+			''' add order items '''
+			''' get the order ID '''
+			order_id = create_order.pk
+
+			''' get product id '''
+			for product in cart_products():
+				product_id = product.id
+				''' get product price '''
+				if product.is_sale:
+					price = product.sale_price
+				else:
+					price = product.price
+
+				''' get quantity '''
+				for key, value in quantities().items():
+					if int(key) == product.id:
+						''' create order item '''
+						create_order_item = OrderItem(order_id=order_id, product_id=product_id, quantity=value, price=price)
+						create_order_item.save()
+
+
+
+
 
 			messages.success(request, "Order placed")
 			return redirect('home')
