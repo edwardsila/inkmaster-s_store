@@ -1,24 +1,60 @@
 from django.shortcuts import render, redirect
 from cart.cart import Cart
 from payment.forms import ShippingForm, PaymentForm
-from payment.models import ShippingAddress
+from payment.models import ShippingAddress, Order, OrderItem
 from django.contrib import messages
+from django.contrib.auth.models import User
 
 # Create your views here.
 
 def process_order(request):
-	''' did someone submit the form '''
 	if request.POST:
+		''' get tghe cart '''
+		cart = Cart(request)
+		cart_products = cart.get_product
+
+		quantities = cart.get_quantity
+		totals = cart.cart_total()
+
+
 		''' get billing info from last page '''
 		payment_form = PaymentForm(request.POST or None)
 		''' get shipping session data '''
 		my_shipping = request.session.get('my_shipping')
-		print(my_shipping)
-		messages.success(request, "Order placed")
-		return redirect('home')
+
+		''' gather order info '''
+		full_name = my_shipping['shipping_full_name']
+		email = my_shipping['shipping_email']
+
+		''' create shipping address from session info'''
+		shipping_address = f"{my_shipping['shipping_address1']}\n{my_shipping['shipping_address2']}\n{my_shipping['shipping_city']}\n{my_shipping['shipping_state']}\n{my_shipping['shipping_zipcode']}\n{my_shipping['shipping_country']}"
+		amount_paid = totals
+
+		''' create an order '''
+		if request.user.is_authenticated:
+			''' logged in '''
+			user = request.user
+			''' create order '''
+			create_order = Order(user=user, full_name=full_name, email=email, shipping_address=shipping_address, amount_paid=amount_paid)
+			create_order.save()
+
+			messages.success(request, "Order placed")
+			return redirect('home')
+
+		else:
+			''' not logged in '''
+			''' create order '''
+			create_order = Order(full_name=full_name, email=email, shipping_address=shipping_address, amount_paid=amount_paid)
+			create_order.save()
+
+			messages.success(request, "Order placed")
+			return redirect('home')
+
+
 	else:
 		messages.success(request, "Access denied")
 		return redirect('home')
+
 
 def billing_info(request):
 	if request.POST:
