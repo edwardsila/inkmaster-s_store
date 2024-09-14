@@ -4,7 +4,7 @@ from payment.forms import ShippingForm, PaymentForm
 from payment.models import ShippingAddress, Order, OrderItem
 from django.contrib import messages
 from django.contrib.auth.models import User
-from store.models import Product
+from store.models import Product, Profile
 import datetime
 
 
@@ -148,6 +148,12 @@ def process_order(request):
 				if key == "session_key":
 					''' delete the key '''
 					del request.session[key]
+
+			''' Delete Cart from Database (old_cart field)'''
+			current_user = Profile.objects.filter(user__id=request.user.id)
+			''' Delete shopping cart in database (old_cart field) '''
+			current_user.update(old_cart="")
+
 
 
 
