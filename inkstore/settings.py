@@ -34,7 +34,7 @@ SECRET_KEY = 'django-insecure-&4q)pszxlfti4cv$*%_d0x98rj%l2mtvfltb6)i3^2rg35q$+t
 DEBUG = True
 
 ALLOWED_HOSTS = ['inkmaster-sstore-production.up.railway.app', 'https://inkmaster-sstore-production.up.railway.app']
-CSRF_TRUSTED_ORIGINS = ['inkmaster-sstore-production.up.railway.app', 'https://inkmaster-sstore-production.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://inkmaster-sstore-production.up.railway.app']
 
 # Application definition
 
