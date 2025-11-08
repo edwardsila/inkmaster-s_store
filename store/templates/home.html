@@ -3,92 +3,139 @@
 
 
 {% block content %}
+
+<!-- Modern Shoe Store Homepage -->
 <style>
-
-/* Styling for smaller product cards */
-.product-card {
-    padding: 10px;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    transition: transform 0.2s ease-in-out;
+/* Page layout tweaks */
+.hero {
+        background: linear-gradient(90deg, #111827 30%, rgba(17,24,39,0.6) 100%), url('{% static "assets/hero-shoes.jpg" %}') no-repeat center/cover;
+        color: #fff;
+        padding: 80px 0;
 }
-
-.product-card:hover {
-    transform: scale(1.05);
+.hero .lead {
+        color: rgba(255,255,255,0.9);
 }
+.category-icons .icon {
+        width:72px; height:72px; border-radius:16px; background:#fff; display:flex; align-items:center; justify-content:center; box-shadow:0 6px 18px rgba(16,24,40,0.12); transition:transform .18s ease;
+}
+.category-icons .icon img{width:48px;height:48px;object-fit:contain}
+.category-icons .icon:hover{transform:translateY(-6px)}
 
-.product-img {
-    max-height: 250px; /* Adjust the height to make images smaller */
-    object-fit: cover;
-    border-bottom: 1px solid #ddd;
+.product-card { border: none; background: transparent; }
+.product-thumb { width:130px; height:130px; border-radius:16px; object-fit:cover; box-shadow: 0 8px 24px rgba(2,6,23,.08); transition: transform .18s ease; }
+.product-item { padding:18px; border-radius:12px; background: #fff; }
+.product-item:hover .product-thumb{ transform: translateY(-6px) scale(1.02); }
+.product-name { font-weight:600; font-size:1rem }
+.price { color:#111827; font-weight:700 }
+
+.cta-btn { background: linear-gradient(90deg,#ff7a59,#ff5a8b); border:none }
+
+/* Responsive spacing */
+@media (max-width: 768px){
+    .hero{padding:48px 0}
+    .product-thumb{width:100px;height:100px}
 }
 </style>
 
-<!-- Hero Banner -->
-<section class="hero-banner position-relative" style="height: 150px; width: 100vw; background: url('path-to-your-image.jpg') no-repeat center center / cover, rgba(0, 0, 0, 0.7); color: white; margin-left: calc(-50vw + 50%);">
-    <div class="container-fluid h-100 d-flex justify-content-center align-items-center" style="background: rgba(0, 0, 0, 0.7);">
-        <div class="text-container text-center text-light">
-            <h1>Welcome to Inkmaster!</h1>
-            <p class="mb-0" style="font-size: 1rem;">Explore the best tattoo products and designs crafted just for you.</p>
+<!-- HERO -->
+<section class="hero">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6 text-white">
+                <h1 class="display-5 fw-bold">Step Into Style</h1>
+                <p class="lead">Discover the latest sneakers, boots, and designer shoes — curated for comfort and crafted for looks. Free shipping over $75.</p>
+                <div class="d-flex gap-2 mt-4">
+                    <a href="{% url 'category_summary' %}" class="btn btn-lg cta-btn text-white rounded-pill px-4">Shop Collection</a>
+                    <a href="#featured" class="btn btn-outline-light rounded-pill px-4">Explore</a>
+                </div>
+            </div>
+            <div class="col-md-6 d-none d-md-block">
+                <!-- Decorative mockup / quick picks -->
+                <div class="row g-3">
+                    <div class="col-6">
+                        <img src="{% static 'assets/hero-shoe-1.jpg' %}" class="img-fluid rounded-4 shadow-lg" alt="hero shoe 1">
+                    </div>
+                    <div class="col-6">
+                        <img src="{% static 'assets/hero-shoe-2.jpg' %}" class="img-fluid rounded-4 shadow-lg" alt="hero shoe 2">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Category Icons -->
+        <div class="row mt-5 category-icons text-center">
+            <div class="col-4 col-md-2">
+                <div class="icon mx-auto"><img src="{% static 'assets/icons/sneaker.png' %}" alt="Sneakers"></div>
+                <div class="mt-2 small text-white">Sneakers</div>
+            </div>
+            <div class="col-4 col-md-2">
+                <div class="icon mx-auto"><img src="{% static 'assets/icons/boot.png' %}" alt="Boots"></div>
+                <div class="mt-2 small text-white">Boots</div>
+            </div>
+            <div class="col-4 col-md-2">
+                <div class="icon mx-auto"><img src="{% static 'assets/icons/loafers.png' %}" alt="Loafers"></div>
+                <div class="mt-2 small text-white">Casual</div>
+            </div>
+            <div class="col-6 col-md-2 mt-3 mt-md-0">
+                <div class="icon mx-auto"><img src="{% static 'assets/icons/formal.png' %}" alt="Formal"></div>
+                <div class="mt-2 small text-white">Formal</div>
+            </div>
+            <div class="col-6 col-md-2 mt-3 mt-md-0">
+                <div class="icon mx-auto"><img src="{% static 'assets/icons/slipon.png' %}" alt="Slip-on"></div>
+                <div class="mt-2 small text-white">Slip-ons</div>
+            </div>
+        </div>
+    </div>
+ </section>
+
+
+<!-- FEATURED PRODUCTS -->
+<section id="featured" class="py-5 bg-light">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="mb-0">Featured Shoes</h2>
+            <a href="{% url 'category_summary' %}" class="small text-muted">View all &rarr;</a>
+        </div>
+
+        <div class="row g-4">
+            {% for product in products %}
+            <div class="col-6 col-md-3">
+                <div class="product-item text-center">
+                    <a href="{% url 'product' product.id %}">
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-thumb mb-3">
+                    </a>
+                    <div class="product-name">{{ product.name|truncatechars:30 }}</div>
+                    <div class="d-flex justify-content-center align-items-baseline gap-2">
+                        {% if product.is_sale %}
+                            <div class="text-muted"><small><s>${{ product.price }}</s></small></div>
+                            <div class="price">${{ product.sale_price }}</div>
+                        {% else %}
+                            <div class="price">${{ product.price }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="mt-3">
+                        <a href="{% url 'product' product.id %}" class="btn btn-sm btn-outline-primary rounded-pill">View</a>
+                        <button class="btn btn-sm btn-primary rounded-pill ms-2 add-cart" data-id="{{ product.id }}">Add</button>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center text-muted">No products available.</div>
+            {% endfor %}
         </div>
     </div>
 </section>
 
-<!-- Products Section -->
-<section class="products py-4">
-    <div class="container text-center">
-        <h2 class="mb-4">Featured Products</h2>
-        <div class="row justify-content-center">
-        
-            {% for product in products %}
-            	{% if product.is_sale %}
-            	<div class="col-12 col-md-4 mb-4">
-                <div class="card product-card text-center">
-                   <span class="position-absolute top-0 start-0 m-2 badge bg-danger">Sale</span>
-                    <img src="{{ product.image.url }}" class="card-img-top product-img" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ product.name }}</h5>
-                        
-                          <div class="d-flex justify-content-center mb-2">
-                		<span class="text-warning">&#9733;</span>
-                		<span class="text-warning">&#9733;</span>
-                		<span class="text-warning">&#9733;</span>
-                		<span class="text-warning">&#9733;</span>
-                		<span class="text-secondary">&#9733;</span>
-            		</div>
-                        <p class="card-text"><strike>${{ product.price }}</strike> &nbsp; ${{ product.sale_price }} </p>
-                        
-                        <p class="card-text">{{ product.category }}</p>
-                        <a href="{% url 'product' product.id %}" class="btn btn-primary">View Product</a>
-                    </div>
-                </div>
-            </div>
-            
-            	{% else %}
-            <div class="col-12 col-md-4 mb-4">
-                <div class="card product-card text-center">
-                    <img src="{{ product.image.url }}" class="card-img-top product-img" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ product.name }}</h5>
-                        
-                          <div class="d-flex justify-content-center mb-2">
-                		<span class="text-warning">&#9733;</span>
-                		<span class="text-warning">&#9733;</span>
-                		<span class="text-warning">&#9733;</span>
-                		<span class="text-warning">&#9733;</span>
-                		<span class="text-secondary">&#9733;</span>
-            		</div>
-                        <p class="card-text">${{ product.price }}</p>
-                        <p class="card-text">{{ product.category }}</p>
-                        <a href="{% url 'product' product.id %}" class="btn btn-primary">View Product</a>
-                    </div>
-                </div>
-        
-            </div>
-            {% endif %}
-            {% endfor %}
-            <!-- Additional products can be added here -->
-        </div>
-    </div>
-</section>
+<!-- Minimal interactive script for quick add animation -->
+<script>
+document.addEventListener('click', function(e){
+    if(e.target && e.target.classList.contains('add-cart')){
+        const btn = e.target;
+        btn.innerText = 'Added';
+        btn.disabled = true;
+        setTimeout(()=>{ btn.innerText = 'Add'; btn.disabled = false }, 1000);
+    }
+});
+</script>
+
 {% endblock %}

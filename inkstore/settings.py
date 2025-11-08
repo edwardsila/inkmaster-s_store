@@ -33,7 +33,17 @@ SECRET_KEY = 'django-insecure-&4q)pszxlfti4cv$*%_d0x98rj%l2mtvfltb6)i3^2rg35q$+t
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://ke254.tech', 'ke254.tech', 'inkmaster-sstore-production.up.railway.app', 'https://inkmaster-sstore-production.up.railway.app']
+ALLOWED_HOSTS = [
+    'https://ke254.tech',
+    'ke254.tech',
+    'inkmaster-sstore-production.up.railway.app',
+    'https://inkmaster-sstore-production.up.railway.app',
+    # Local development hosts
+    '127.0.0.1',
+    'localhost',
+    '0.0.0.0',
+]
+
 CSRF_TRUSTED_ORIGINS = ['https://ke254.tech', 'https://inkmaster-sstore-production.up.railway.app']
 
 # Application definition
@@ -89,18 +99,27 @@ WSGI_APPLICATION = 'inkstore.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 
-DATABASES = {
-    'default': {
-        #'ENGINE': 'django.db.backends.sqlite3',
-        #'NAME': BASE_DIR / 'db.sqlite3',
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'railway',
-        'USER': 'postgres',
-        'PASSWORD': os.environ['DB_PASSWORD'],
-        'HOST': 'junction.proxy.rlwy.net',
-        'PORT': '40327',
+# Database configuration: prefer Postgres in production (via env),
+# but fall back to SQLite for local development if DB_PASSWORD is not set.
+try:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'railway',
+            'USER': 'postgres',
+            'PASSWORD': os.environ['DB_PASSWORD'],
+            'HOST': 'junction.proxy.rlwy.net',
+            'PORT': '40327',
+        }
     }
-}
+except KeyError:
+    # Local fallback to SQLite (no external DB required)
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 
 # Password validation

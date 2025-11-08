@@ -45,31 +45,43 @@
 
 
 
-<!-- Updated Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="{% url 'home' %}">
-            Inkmaster
+<!-- Modern Navbar for Shoe Store -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center gap-2" href="{% url 'home' %}">
+            <img src="{% static 'assets/logo-small.png' %}" alt="Logo" style="height:36px; width:auto; object-fit:contain;">
+            <span class="fw-bold text-dark">ShoeHaus</span>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link active" href="{% url 'home' %}">Home</a>
+            <form class="d-flex ms-3 w-50" role="search" action="{% url 'search' %}" method="get">
+                <input class="form-control rounded-pill border-0 shadow-sm me-2" type="search" placeholder="Search shoes, brands, styles..." aria-label="Search" name="q">
+                <button class="btn btn-primary rounded-pill px-4" type="submit">Search</button>
+            </form>
+
+            <ul class="navbar-nav ms-auto align-items-center">
+                <li class="nav-item me-2">
+                    <a class="nav-link text-dark" href="{% url 'home' %}">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="{% url 'search' %}">Search</a>
+                <li class="nav-item me-2">
+                    <a class="nav-link text-dark" href="{% url 'category_summary' %}">Shop</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'about' %}">About</a>
+                <li class="nav-item me-2">
+                    <a class="nav-link text-dark" href="{% url 'about' %}">About</a>
                 </li>
                 
                 
                 {% if user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                <li class="nav-item dropdown me-2">
+                    <a class="nav-link dropdown-toggle text-dark" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ user.username }}
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+                        <li><a class="dropdown-item" href="{% url 'update_user' %}">Profile</a></li>
+                        <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                    </ul>
                 </li>
 
                  <li class="nav-item dropdown">
@@ -97,11 +109,11 @@
                 {% endif %}
                 
                 {% else %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                <li class="nav-item me-2">
+                    <a class="nav-link text-dark" href="{% url 'login' %}">Login</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'register' %}">Register</a>
+                <li class="nav-item me-2">
+                    <a class="nav-link btn btn-outline-primary rounded-pill px-3" href="{% url 'register' %}">Sign up</a>
                 </li>
                 {% endif %}
                 
@@ -120,18 +132,13 @@
                         <li><a class="dropdown-item" href="{% url 'category' 'Tattoo-Machines' %}">Tattoo Machines</a></li>
                     </ul>
                 </li>
-             </ul>
-         <ul class="navbar-nav ms-5">
-    <li class="nav-item">
-        <a class="nav-link p-0" href="{% url 'cart_summary' %}">
-            <div class="cart-icon-container">
-                <i class="bi bi-cart-fill cart-icon"></i> <!-- Cart Icon -->
-                 <span class="cart-text">Cart</span>
-                <span class="badge bg-dark text-white ms-1 rounded-pill" id="cart_quantity">{{ cart|length }}</span> <!-- Example count -->
-            </div>
-        </a>
-    </li>
-</ul>
+                <li class="nav-item ms-3">
+                    <a class="nav-link position-relative p-0" href="{% url 'cart_summary' %}">
+                        <i class="bi bi-cart-fill fs-4 text-dark"></i>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">{{ cart|length }}</span>
+                    </a>
+                </li>
+            </ul>
         </div>
     </div>
 </nav>
