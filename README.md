@@ -1,10 +1,10 @@
-# 🎨 Tattoo E-Commerce Store
+# 👗 ClothMart — Clothing E-Commerce Store
 
-Welcome to the **Tattoo E-Commerce Store**, your one-stop shop for all things tattoo-related! Whether you’re a professional tattoo artist or a tattoo enthusiast, we offer high-quality products that cater to all your needs.
+Welcome to **ClothMart**, your curated online clothing boutique. We focus on high-quality apparel and accessories chosen for style, fit, and durability. Whether you're refreshing your wardrobe or searching for a signature piece, ClothMart makes it easy to find what you love.
 
 ## 🌟 Features
-- **🛍️ Easy Shopping**: Browse through our wide range of tattoo products.
-- **🖌️ Categories**: Organized categories for easy navigation.
+- **🛍️ Easy Shopping**: Browse through our wide range of clothing and accessories.
+- **🧥 Categories**: Organized categories for easy navigation.
 - **🛒 Seamless Checkout**: Secure payment processing and order tracking.
 - **👤 User Authentication**: Sign up and manage your account.
 
@@ -13,14 +13,14 @@ Welcome to the **Tattoo E-Commerce Store**, your one-stop shop for all things ta
    - User profiles with order history and saved preferences.
 
 ### 2. **Product Browsing & Search**
-   - Browse through a wide range of tattoo-related products.
-   - Categories include:
-     - **Aftercare products**
-     - **Tattoo kits**
-     - **Power supplies**
-     - **Inks**
-     - **Tattoo Needles and Cartridges**
-     - **Tattoo Machines**
+    - Browse through a wide range of clothing items and collections.
+    - Categories include:
+       - **T-Shirts**
+       - **Jackets**
+       - **Jeans**
+       - **Dresses**
+       - **Activewear**
+       - **Accessories**
      - 
 ### 3. **Shopping Cart & Checkout**
    - Easily add products to your cart.
@@ -45,7 +45,7 @@ Welcome to the **Tattoo E-Commerce Store**, your one-stop shop for all things ta
 - **Authentication**: Django AllAuth
 - **Payment Gateway**: PayPal, Stripe
 - **Deployment**: Railway.app
-- **Domain**: [InkMasters](https://ke254.tech)
+-- **Domain**: [ClothMart](https://ke254.tech)  
 
 ---
 
@@ -62,11 +62,11 @@ Watch the demo video for a complete overview of InkMasters on [YouTube](https://
 
 ---
 
-## How to Run InkMasters Locally
+## How to Run ClothMart Locally
 
 1. **Clone the Repository**:
    ```bash
-	https://github.com/edwardsila/inkmaster-s_store.git
+   git clone https://github.com/edwardsila/inkmaster-s_store.git
 
 2. **Activate virtual enviroment**:
    ```bash

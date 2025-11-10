@@ -1,17 +1,50 @@
 {% extends 'base.html' %}
-
-
+{% load static %}
 
 {% block content %}
 
-<!-- Modern Shoe Store Homepage -->
+<!-- Modern Clothing Store Homepage -->
 <style>
-/* Page layout tweaks */
 .hero {
-        background: linear-gradient(90deg, #111827 30%, rgba(17,24,39,0.6) 100%), url('{% static "assets/hero-shoes.jpg" %}') no-repeat center/cover;
+    background: linear-gradient(90deg, #111827 30%, rgba(17,24,39,0.6) 100%), url('{% static "assets/hero-clothes.jpg" %}') no-repeat center/cover;
         color: #fff;
-        padding: 80px 0;
+        /* full-bleed hero that covers most of the viewport */
+        min-height: 82vh;
+        padding: 0; /* inner spacing provided by .hero-card */
+        display:flex;
+        /* start near the top rather than perfectly centered */
+        align-items:flex-start;
+        padding-top:6vh;
 }
+.hero-card{
+    background: #fff;
+    border-radius: 22px;
+    padding: 3rem;
+    box-shadow: 0 60px 120px rgba(2,6,23,0.18);
+    overflow: hidden;
+    /* left aligned large card */
+    width: calc(100% - 8vw);
+    margin-left: 4vw;
+    margin-right: auto;
+    min-height: 78vh;
+    display:grid;
+    grid-template-columns: 1fr 0.9fr;
+    gap: 2.5rem;
+    align-items:center;
+}
+.hero-left{ padding-right:2.5rem }
+.hero-right{ display:flex; align-items:center; justify-content:flex-end }
+.mosaic{ display:grid; grid-template-columns: 1fr 1fr; gap:14px; align-items:center }
+.mosaic .tile{ border-radius:16px; overflow:hidden; background:#f8fafc; height:100% }
+.mosaic .tile img{ width:100%; height:100%; object-fit:cover; display:block }
+.mosaic .accent{ background:#ff6b4a; color:#fff; padding:1rem; border-radius:12px; display:flex; align-items:center; justify-content:center; font-weight:700 }
+.search-box{ display:flex; gap:8px; align-items:center; margin-top:1.6rem }
+.search-box input{ flex:1; border-radius:14px; padding:0.95rem 1.2rem; border:1px solid rgba(17,24,39,0.08); box-shadow: 0 10px 30px rgba(2,6,23,0.05) }
+.search-btn{ background:#ff6b4a; color:#fff; border:none; padding:0.85rem 1.2rem; border-radius:12px }
+.hero-meta{ margin-top:1rem; color: #6b7280 }
+.mosaic-right{ display:grid; grid-template-columns: 1fr 1fr; gap:12px }
+.mosaic-grid{ display:grid; grid-template-columns: 1fr; gap:12px }
+
 .hero .lead {
         color: rgba(255,255,255,0.9);
 }
@@ -39,53 +72,44 @@
 
 <!-- HERO -->
 <section class="hero">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-md-6 text-white">
-                <h1 class="display-5 fw-bold">Step Into Style</h1>
-                <p class="lead">Discover the latest sneakers, boots, and designer shoes — curated for comfort and crafted for looks. Free shipping over $75.</p>
-                <div class="d-flex gap-2 mt-4">
-                    <a href="{% url 'category_summary' %}" class="btn btn-lg cta-btn text-white rounded-pill px-4">Shop Collection</a>
-                    <a href="#featured" class="btn btn-outline-light rounded-pill px-4">Explore</a>
-                </div>
-            </div>
-            <div class="col-md-6 d-none d-md-block">
-                <!-- Decorative mockup / quick picks -->
-                <div class="row g-3">
-                    <div class="col-6">
-                        <img src="{% static 'assets/hero-shoe-1.jpg' %}" class="img-fluid rounded-4 shadow-lg" alt="hero shoe 1">
-                    </div>
-                    <div class="col-6">
-                        <img src="{% static 'assets/hero-shoe-2.jpg' %}" class="img-fluid rounded-4 shadow-lg" alt="hero shoe 2">
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div class="hero-card">
+        <!-- removed container to let the hero-card span left-aligned full width -->
+            <div class="row align-items-center">
+                <div class="col-lg-6 hero-left">
+                    <h1 class="display-5 fw-bold">Wear Your Story</h1>
+                    <p class="lead">Discover curated collections — from casual tees to premium outerwear. Free shipping over $75.</p>
 
-        <!-- Category Icons -->
-        <div class="row mt-5 category-icons text-center">
-            <div class="col-4 col-md-2">
-                <div class="icon mx-auto"><img src="{% static 'assets/icons/sneaker.png' %}" alt="Sneakers"></div>
-                <div class="mt-2 small text-white">Sneakers</div>
+                    <div class="search-box">
+                        <input type="search" placeholder="Search for clothing, brands, styles..." aria-label="Search">
+                        <button class="search-btn">🔍</button>
+                    </div>
+
+                    <div class="hero-meta">
+                        <small>Trending: <strong>T-Shirts</strong> · <strong>Jackets</strong> · <strong>Denim</strong> · <a href="{% url 'category_summary' %}">More</a></small>
+                    </div>
+
+                    <div class="mt-4">
+                        <a href="{% url 'category_summary' %}" class="btn btn-lg cta-btn text-white rounded-pill px-4">Shop Collection</a>
+                        <a href="#featured" class="btn btn-outline-secondary rounded-pill px-4 ms-2">Explore</a>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 hero-right d-none d-lg-flex">
+                    <div class="mosaic">
+                        <div class="tile" style="grid-row: span 2;">
+                            <img src="{% static 'assets/hero-cloth-1.svg' %}" alt="look 1">
+                        </div>
+                        <div class="tile">
+                            <img src="{% static 'assets/hero-cloth-2.svg' %}" alt="look 2">
+                        </div>
+                        <div class="accent">Sale<br/>up to 60%</div>
+                        <div class="tile">
+                            <img src="{% static 'assets/hero-cloth-2.svg' %}" alt="look 3">
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="col-4 col-md-2">
-                <div class="icon mx-auto"><img src="{% static 'assets/icons/boot.png' %}" alt="Boots"></div>
-                <div class="mt-2 small text-white">Boots</div>
-            </div>
-            <div class="col-4 col-md-2">
-                <div class="icon mx-auto"><img src="{% static 'assets/icons/loafers.png' %}" alt="Loafers"></div>
-                <div class="mt-2 small text-white">Casual</div>
-            </div>
-            <div class="col-6 col-md-2 mt-3 mt-md-0">
-                <div class="icon mx-auto"><img src="{% static 'assets/icons/formal.png' %}" alt="Formal"></div>
-                <div class="mt-2 small text-white">Formal</div>
-            </div>
-            <div class="col-6 col-md-2 mt-3 mt-md-0">
-                <div class="icon mx-auto"><img src="{% static 'assets/icons/slipon.png' %}" alt="Slip-on"></div>
-                <div class="mt-2 small text-white">Slip-ons</div>
-            </div>
-        </div>
-    </div>
+     </div>
  </section>
 
 
@@ -93,7 +117,7 @@
 <section id="featured" class="py-5 bg-light">
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2 class="mb-0">Featured Shoes</h2>
+            <h2 class="mb-0">Featured Apparel</h2>
             <a href="{% url 'category_summary' %}" class="small text-muted">View all &rarr;</a>
         </div>
 
